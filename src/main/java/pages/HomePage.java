@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +29,10 @@ public class HomePage {
         // And I wanted to intentionally use this implicit waiting mechanism for my HW.
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
         return new Login(driver);
+    }
+
+    public Search search() {
+        return new Search(driver);
     }
 
 
