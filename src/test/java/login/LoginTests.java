@@ -2,21 +2,20 @@ package login;
 
 import base.BaseTests;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import pages.SecureAreaPage;
+import pages.Login;
+import pages.FailedLoginPage;
 
 import static org.testng.Assert.*;
 
 public class LoginTests extends BaseTests {
 
     @Test
-    public void testSuccessfulLogin(){
-        LoginPage loginPage = homePage.clickFormAuthentication();
-        loginPage.setUsername("tomsmith");
-        loginPage.setPassword("SuperSecretPassword!");
-        SecureAreaPage secureAreaPage = loginPage.clickLoginButton();
-        assertTrue(secureAreaPage.getAlertText()
-                .contains("You logged into a secure area!"),
-                "Alert text is incorrect");
+    public void testFailedLogin() {
+        Login loginPage = homePage.login();
+        loginPage.setUsername("armintdudbdn@gmail.com");
+        loginPage.setPassword("1234445ghfhfgfg");
+        FailedLoginPage failedLoginPage = loginPage.clickLoginButton();
+        assertTrue(failedLoginPage.isDispalyed(), "It is not being displayed");
+        assertTrue(failedLoginPage.getAlertText().contains("Invalid email or password"), "Alert text is incorrect");
     }
 }

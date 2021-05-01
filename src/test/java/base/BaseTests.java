@@ -1,7 +1,6 @@
 package base;
 
 import com.google.common.io.Files;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,65 +13,53 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import utils.EventReporter;
-import utils.WindowManager;
 
 import java.io.File;
 import java.io.IOException;
 
 public class BaseTests {
-
+    private final String systemUnderTest = "https://lemonadefashion.com/";
     private EventFiringWebDriver driver;
     protected HomePage homePage;
 
     @BeforeClass
-    public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+    public void setUp() {
+        System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\chromedriver.exe");
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
         driver.register(new EventReporter());
         goHome();
-        //setCookie();
     }
 
     @BeforeMethod
-    public void goHome(){
-        driver.get("https://the-internet.herokuapp.com/");
+    public void goHome() {
+        driver.get(systemUnderTest);
         homePage = new HomePage(driver);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 
     @AfterMethod
-    public void recordFailure(ITestResult result){
-        if(ITestResult.FAILURE == result.getStatus())
-        {
-            var camera = (TakesScreenshot)driver;
+    public void recordFailure(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            var camera = (TakesScreenshot) driver;
             File screenshot = camera.getScreenshotAs(OutputType.FILE);
-            try{
-                Files.move(screenshot, new File("resources/screenshots/" + result.getName() + ".png"));
-            }catch(IOException e){
+            try {
+                Files.move(screenshot, new File("src/main/screenshots/" + result.getName() + ".png"));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public WindowManager getWindowManager(){
-        return new WindowManager(driver);
-    }
 
-    private ChromeOptions getChromeOptions(){
+    private ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-infobars");
         //options.setHeadless(true);
         return options;
     }
 
-    private void setCookie(){
-        Cookie cookie = new Cookie.Builder("tau", "123")
-                .domain("the-internet.herokuapp.com")
-                .build();
-        driver.manage().addCookie(cookie);
-    }
 }

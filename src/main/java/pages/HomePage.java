@@ -3,70 +3,36 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class HomePage {
 
     private WebDriver driver;
 
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public LoginPage clickFormAuthentication(){
-        clickLink("Form Authentication");
-        return new LoginPage(driver);
-    }
-
-    public DropdownPage clickDropDown(){
-        clickLink("Dropdown");
-        return new DropdownPage(driver);
-    }
-
-    public HoversPage clickHovers(){
-        clickLink("Hovers");
+    public HoversPage clickHovers() {
         return new HoversPage(driver);
     }
 
-    public KeyPressesPage clickKeyPresses(){
-        clickLink("Key Presses");
-        return new KeyPressesPage(driver);
+    public ButtonHandler buttonHandler() {
+        return new ButtonHandler(driver);
     }
 
-    public AlertsPage clickJavaScriptAlerts(){
-        clickLink("JavaScript Alerts");
-        return new AlertsPage(driver);
+    public Login login() {
+        findAndClickByXpath("//body/div[@id='root']/nav[1]/div[1]/div[1]/ul[2]/li[4]/img[1]");
+        findAndClickByXpath("//a[contains(text(),'Log In')]");
+        // 7 seconds in the worst case scenario is fine.
+        // And I wanted to intentionally use this implicit waiting mechanism for my HW.
+        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
+        return new Login(driver);
     }
 
-    public FileUploadPage clickFileUpload(){
-        clickLink("File Upload");
-        return new FileUploadPage(driver);
+
+    private void findAndClickByXpath(String path) {
+       driver.findElement(By.xpath(path)).click();
     }
 
-    public WysiwygEditorPage clickWysiwygEditor(){
-        clickLink("WYSIWYG Editor");
-        return new WysiwygEditorPage(driver);
-    }
-
-    public LargeAndDeepDomPage clickLargeAndDeepDom(){
-        clickLink("Large & Deep DOM");
-        return new LargeAndDeepDomPage(driver);
-    }
-
-    public InfiniteScrollPage clickInfiniteScroll(){
-        clickLink("Infinite Scroll");
-        return new InfiniteScrollPage(driver);
-    }
-
-    public DynamicLoadingPage clickDynamicLoading(){
-        clickLink("Dynamic Loading");
-        return new DynamicLoadingPage(driver);
-    }
-
-    public MultipleWindowsPage clickMultipleWindows(){
-        clickLink("Multiple Windows");
-        return new MultipleWindowsPage(driver);
-    }
-
-    private void clickLink(String linkText){
-        driver.findElement(By.linkText(linkText)).click();
-    }
 }
