@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class BaseTests {
-    private final String systemUnderTest = "https://lemonadefashion.com/";
+    // There are some new core changes that are goin to be applied on the production website
+    // So I use my own environment website.
+    private final String systemUnderTest = "https://dev00.lemonadefashion.com/";
     private EventFiringWebDriver driver;
     protected HomePage homePage;
 

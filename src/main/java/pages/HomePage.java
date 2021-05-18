@@ -2,13 +2,19 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
 public class HomePage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
+
+    // Accepting cookies. This basically avoids the ElementClickInterceptedException when we will use other buttons
+    private void clickCookiesPanel () {
+        driver.findElement(By.xpath("//button[contains(text(),'ACCEPT')]")).click();
+        // This 15 seconds is the maximum time that it can take to disappear.
+        driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
+    }
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -18,16 +24,16 @@ public class HomePage {
         return new HoversPage(driver);
     }
 
-    public ButtonHandler buttonHandler() {
-        return new ButtonHandler(driver);
+    public AddToCart cart() {
+        clickCookiesPanel();
+        return new AddToCart(driver);
+    }
+
+    public AllTheHomePageButtonLinks allTheHomePageButtonLinks() {
+        return new AllTheHomePageButtonLinks(driver);
     }
 
     public Login login() {
-        findAndClickByXpath("//body/div[@id='root']/nav[1]/div[1]/div[1]/ul[2]/li[4]/img[1]");
-        findAndClickByXpath("//a[contains(text(),'Log In')]");
-        // 7 seconds in the worst case scenario is fine.
-        // And I wanted to intentionally use this implicit waiting mechanism for my HW.
-        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
         return new Login(driver);
     }
 
@@ -35,9 +41,9 @@ public class HomePage {
         return new Search(driver);
     }
 
-
-    private void findAndClickByXpath(String path) {
-       driver.findElement(By.xpath(path)).click();
+    public ContactUs contactUs() {
+        clickCookiesPanel();
+        return new ContactUs(driver);
     }
 
 }

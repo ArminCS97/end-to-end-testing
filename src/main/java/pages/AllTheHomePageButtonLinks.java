@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ButtonHandler {
+public class AllTheHomePageButtonLinks {
     private WebDriver driver;
     private WebElement button;
 
-    public ButtonHandler(WebDriver driver) {
+    public AllTheHomePageButtonLinks(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -26,7 +26,7 @@ public class ButtonHandler {
         HttpURLConnection httpURLConnect = (HttpURLConnection) url.openConnection();
         httpURLConnect.setConnectTimeout(5000);
         httpURLConnect.connect();
-        //Fetching and Printing the response code obtained
+        // Fetching and Printing the response code obtained
         return httpURLConnect.getResponseCode() < 400;
     }
 }
