@@ -44,9 +44,9 @@ public class AddToCartTests extends BaseTests {
         assertTrue(items2.contains("21,473 AMD"), "List must contain the price of the item specified");
         assertTrue(items2.contains("European 66 M"), "List must contain the size of the item specified");
 
-        assertEquals(priceDict2.get("Subtotal"), "52,416,592 AMD", "Subtotal Price does not match");
+        assertEquals(priceDict2.get("Subtotal"), "26,208,296 AMD", "Subtotal Price does not match");
         assertEquals(priceDict2.get("Express Shipping to Armenia"), "10,469 AMD", "Express Price does not match");
-        assertEquals(priceDict2.get("Total"), "52,427,062 AMD", "Total Price does not match");
+        assertEquals(priceDict2.get("Total"), "26,218,766 AMD", "Total Price does not match");
     }
 
 }

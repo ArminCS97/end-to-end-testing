@@ -17,7 +17,7 @@ public class AddToCart {
 
     // We have to be the cart page so that these 2 locators can be found
     private final By cartResults = By.tagName("div");
-    private final By priceAndShippingDetails = By.xpath("//tbody/tr[1]/td[1]/div[1]/div[2]");
+    private final By priceAndShippingDetails = By.xpath("//tbody/tr[1]/td[1]");
 
     public AddToCart(WebDriver driver) {
         this.driver = driver;
@@ -65,13 +65,12 @@ public class AddToCart {
 
 
     public List<String> getCartItems() {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement result = driver.findElement(cartResults);
         ArrayList<String> items = new ArrayList<>();
         for (String text : result.getText().split("\n")) {
             items.add(text);
         }
-        System.out.println(items + "jjjjj");
         return items;
     }
 
@@ -92,7 +91,6 @@ public class AddToCart {
                     priceDict.put("Total", texts.get(i + 1));
             }
         }
-        System.out.println(priceDict);
         return priceDict;
     }
 }
